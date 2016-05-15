@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PracticalTest02</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="server">Server</string>
+    <string name="message_from_server">Message from Server</string>
+    <string name="display_message">Display message</string>
+    <string name="server_port">Server Port</string>
+    <string name="server_address">Server address</string>
+    <string name="client">Client</string>
+    <string name="Temperature"/>
+    <string name="City">City</string>
+</resources>

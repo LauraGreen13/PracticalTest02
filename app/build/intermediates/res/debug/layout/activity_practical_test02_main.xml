@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:orientation="vertical"
+              tools:context="ro.pub.cs.systems.eim.practicaltest02.PracticalTest02MainActivity">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_columnSpan="2" >
+
+    </ScrollView>
+
+    <FrameLayout
+            android:id="@+id/server_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5" />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <FrameLayout
+            android:id="@+id/client_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7" />
+
+    </ScrollView>
+
+</LinearLayout>
+<!-- From: file:/home/laura/IdeaProjects/Laborator06/labtasks/eclipse/PracticalTest02/app/src/main/res/layout/activity_practical_test02_main.xml -->
