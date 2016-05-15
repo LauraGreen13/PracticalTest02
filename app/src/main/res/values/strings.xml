@@ -11,4 +11,5 @@
     <string name="client">Client</string>
     <string name="Temperature"/>
     <string name="City">City</string>
+    <string name="connect">Connect</string>
 </resources>

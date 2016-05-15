@@ -16,6 +16,7 @@ import ro.pub.cs.systems.eim.practicaltest02.general.Utilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientFragment extends Fragment {
@@ -23,6 +24,7 @@ public class ClientFragment extends Fragment {
     private EditText serverAddressEditText, serverPortEditText;
     private TextView serverMessageTextView;
     private Button displayMessageButton;
+    private EditText cityEditText;
 
     private class ClientAsyncTask extends AsyncTask<String, String, Void> {
 
@@ -36,6 +38,10 @@ public class ClientFragment extends Fragment {
                 if (socket == null) {
                     return null;
                 }
+
+                PrintWriter printWriter = Utilities.getWriter(socket);
+                printWriter.println(cityEditText.getText());
+
                 Log.v(Constants.TAG, "Connection opened with " + socket.getInetAddress() + ":" + socket.getLocalPort());
                 BufferedReader bufferedReader = Utilities.getReader(socket);
                 String currentLine;
@@ -89,7 +95,7 @@ public class ClientFragment extends Fragment {
         serverAddressEditText = (EditText)getActivity().findViewById(R.id.server_address_edit_text);
         serverPortEditText = (EditText)getActivity().findViewById(R.id.server_port_edit_text);
         serverMessageTextView = (TextView)getActivity().findViewById(R.id.server_message_text_view);
-
+        cityEditText = (EditText) getActivity().findViewById(R.id.city_edit_text);
         displayMessageButton = (Button)getActivity().findViewById(R.id.display_message_button);
         displayMessageButton.setOnClickListener(new Button.OnClickListener() {
             @Override

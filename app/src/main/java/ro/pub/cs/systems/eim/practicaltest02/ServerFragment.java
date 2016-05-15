@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -22,6 +23,7 @@ import ro.pub.cs.systems.eim.practicaltest02.general.Constants;
 import ro.pub.cs.systems.eim.practicaltest02.general.Utilities;
 import ro.pub.cs.systems.eim.practicaltest02.model.WeatherInfo;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -29,35 +31,36 @@ import java.net.Socket;
 
 public class ServerFragment extends Fragment {
     private EditText serverTextEditText;
-    private EditText cityEditText;
 
-    private ServerTextContentWatcher serverTextContentWatcher = new ServerTextContentWatcher();
+    private Button connectButton;
 
-    private class ServerTextContentWatcher implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-            Log.v(Constants.TAG, "Text changed in edit text: " + charSequence.toString());
-            if (Constants.SERVER_START.toString().equals(charSequence.toString())) {
-                serverThread = new ServerThread();
-                serverThread.startServer();
-                Log.v(Constants.TAG, "Starting server...");
-            }
-            if (Constants.SERVER_STOP.equals(charSequence.toString())) {
-                serverThread.stopServer();
-                Log.v(Constants.TAG, "Stopping server...");
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-
-    }
+//    private ServerTextContentWatcher serverTextContentWatcher = new ServerTextContentWatcher();
+//
+//    private class ServerTextContentWatcher implements TextWatcher {
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+//            Log.v(Constants.TAG, "Text changed in edit text: " + charSequence.toString());
+//            if (Constants.SERVER_START.toString().equals(charSequence.toString())) {
+//                serverThread = new ServerThread();
+//                serverThread.startServer();
+//                Log.v(Constants.TAG, "Starting server...");
+//            }
+//            if (Constants.SERVER_STOP.equals(charSequence.toString())) {
+//                serverThread.stopServer();
+//                Log.v(Constants.TAG, "Stopping server...");
+//            }
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable editable) {
+//        }
+//
+//    }
 
     private class CommunicationThread extends Thread {
 
@@ -90,10 +93,13 @@ public class ServerFragment extends Fragment {
 //                        ioException.printStackTrace();
 //                    }
 //                }
+                BufferedReader bufferedReader = Utilities.getReader(socket);
+                String cityName = bufferedReader.readLine();
+
                 String result = "";
 
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpWebPageGet = new HttpGet(Constants.WEATHER_URL + cityEditText.getText());
+                HttpGet httpWebPageGet = new HttpGet(Constants.WEATHER_URL + cityName);
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 try {
@@ -198,9 +204,20 @@ public class ServerFragment extends Fragment {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
 
-        serverTextEditText = (EditText) getActivity().findViewById(R.id.server_text_edit_text);
-        cityEditText = (EditText) getActivity().findViewById(R.id.city_edit_text);
-        serverTextEditText.addTextChangedListener(serverTextContentWatcher);
+//        serverTextEditText = (EditText) getActivity().findViewById(R.id.server_text_edit_text);
+
+//        serverTextEditText.addTextChangedListener(serverTextContentWatcher);
+        connectButton = (Button)getActivity().findViewById(R.id.connect_button);
+        connectButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serverThread = new ServerThread();
+                serverThread.startServer();
+                Log.v(Constants.TAG, "Starting server...");
+            }
+        });
+
+
     }
 
     @Override
